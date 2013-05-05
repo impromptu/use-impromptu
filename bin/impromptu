@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 try {
-  require(process.env.HOME + '/.impromptu/node_modules/impromptu').cli();
+  var Impromptu = require(process.env.HOME + '/.impromptu/node_modules/impromptu');
 } catch(err) {
   process.stdout.write('Unable to find local Impromptu.\n$ ');
   process.exit();
 }
+
+Impromptu.cli();
