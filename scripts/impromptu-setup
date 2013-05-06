@@ -32,7 +32,7 @@ function npmInstallMyImpromptu() {
   var localInstallEnv = JSON.parse(JSON.stringify(process.env));
   delete localInstallEnv.npm_config_global;
 
-  var install = spawn('npm', ['install', '.'], {cwd: PROMPT_DIR, env: localInstallEnv});
+  var install = spawn('npm', 'install . --production'.split(' '), {cwd: PROMPT_DIR, env: localInstallEnv});
   install.stdin.setEncoding = 'utf-8';
   install.stdout.pipe(process.stdout, {end: false});
 
