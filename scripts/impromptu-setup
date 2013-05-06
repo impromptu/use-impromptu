@@ -23,7 +23,16 @@ function printCommandOutput(data) {
 function npmInstallMyImpromptu() {
   console.log('NPM installing My Impromptu.');
 
-  var install = spawn('npm', ['install'], {cwd: PROMPT_DIR});
+  // Clone the process.env object and rip out the global install setting
+  // Without this, NPM will run any npm install processes forked from this
+  // process as global installs.
+  //
+  // Uses JSON.stringify/parse to "clone" process.env. This is relatively
+  // safe because all of the values come from the shell, so they're all strings.
+  var localInstallEnv = JSON.parse(JSON.stringify(process.env));
+  delete localInstallEnv.npm_config_global;
+
+  var install = spawn('npm', ['install', '.'], {cwd: PROMPT_DIR, env: localInstallEnv});
   install.stdin.setEncoding = 'utf-8';
   install.stdout.pipe(process.stdout, {end: false});
 
