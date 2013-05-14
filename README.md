@@ -1,7 +1,10 @@
 Use Impromptu
 =============
 
-`npm install -g use-impromptu`
+1. `npm install -g use-impromptu`
+2. Add `source impromptu` to your shell's configuration file (bashrc, zshrc, etc).
 
-1. Installs Impromptu dependencies and clones the `my-impromptu` repository.
-2. Provides a global `impromptu` bin script.
+---
+
+This installs Impromptu dependencies and clones the `my-impromptu` repository into `~/.impromptu`, adds a global `impromptu` bin script, and sets your prompt to use Impromptu.
+
