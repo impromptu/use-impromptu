@@ -2,7 +2,7 @@ Use Impromptu
 =============
 
 1. `npm install -g use-impromptu`
-2. Add `source impromptu` to your shell's configuration file (bashrc, zshrc, etc).
+2. Add `source "$(which impromptu)` to your shell's configuration file (bashrc, zshrc, etc).
 
 ---
 
