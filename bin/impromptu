@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
-build_prompt="$HOME/.impromptu/node_modules/impromptu/bin/impromptu-prompt"
+if [[ -z "$IMPROMPTU_BIN" || ! -d "$IMPROMPTU_BIN" ]]; then
+  export IMPROMPTU_BIN="$HOME/.impromptu/node_modules/impromptu/bin"
+fi
+
+build_prompt="$IMPROMPTU_BIN/impromptu-prompt"
 if [ -f "$build_prompt" ]; then
-  $build_prompt
+  source $build_prompt
 else
   printf "Unable to find local Impromptu.\n$ "
 fi
