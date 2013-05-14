@@ -7,5 +7,5 @@ build_prompt="$IMPROMPTU_BIN/impromptu-prompt"
 if [ -f "$build_prompt" ]; then
   source $build_prompt
 else
-  printf "Unable to find local Impromptu.\n$ "
+  printf "Unable to find Impromptu.\n$ "
 fi
