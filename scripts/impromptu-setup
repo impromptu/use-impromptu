@@ -15,6 +15,8 @@ var userInput = readline.createInterface({
 });
 
 var PROMPT_DIR = process.env.HOME + '/.impromptu';
+var usingSudo = process.env.SUDO_GID && process.env.SUDO_UID;
+
 
 function printCommandOutput(data) {
   process.stdout.write(data.toString());
@@ -52,9 +54,23 @@ function cloneMyImpromptu() {
 
   console.log('Cloning...');
   var commandArg = 'clone git://github.com/Impromptu/my-impromptu.git ' + PROMPT_DIR;
-  var clone = spawn('git', commandArg.split(' '));
+
+  var options = {};
+  if (usingSudo) {
+    options.gid = parseInt(process.env.SUDO_GID, 10);
+    options.uid = parseInt(process.env.SUDO_UID, 10);
+  }
+
+  var clone = spawn('git', commandArg.split(' '), options);
   clone.stdout.on('data', printCommandOutput);
   clone.stderr.on('data', printCommandOutput);
+
+  clone.on('error', function() {
+    if (process.env.npm_config_unsafe_perm != 'true') {
+      console.log('You need to use the --unsafe flag to install Impromptu with sudo.');
+      process.exit(1);
+    }
+  })
 
   clone.on('close', function(code) {
     if(code !== 0) {
