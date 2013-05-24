@@ -14,9 +14,8 @@ var userInput = readline.createInterface({
   output : process.stdout
 });
 
-var PROMPT_DIR = process.env.HOME + '/.impromptu';
+var PROMPT_DIR;
 var usingSudo = process.env.SUDO_GID && process.env.SUDO_UID;
-
 
 function printCommandOutput(data) {
   process.stdout.write(data.toString());
@@ -70,7 +69,7 @@ function cloneMyImpromptu() {
       console.log('You need to use the --unsafe flag to install Impromptu with sudo.');
       process.exit(1);
     }
-  })
+  });
 
   clone.on('close', function(code) {
     if(code !== 0) {
@@ -92,8 +91,21 @@ function handleQuestionResponse(response) {
   cloneMyImpromptu();
 }
 
-if (fs.existsSync(PROMPT_DIR))
-  process.exit(0);
+function main() {
+  if (fs.existsSync(PROMPT_DIR))
+    process.exit(0);
 
-console.log("You don't have a ~/.impromptu directory.");
-userInput.question("Would you like help setting one up? (Y/n) ", handleQuestionResponse);
+  console.log("You don't have a ~/.impromptu directory.");
+  userInput.question("Would you like help setting one up? (Y/n) ", handleQuestionResponse);
+}
+
+// Override home directory when using sudo
+if (usingSudo) {
+  exec('eval echo ~${SUDO_USER}', function(err, stdout) {
+    PROMPT_DIR = stdout.trim() + '/.impromptu';
+    main();
+  });
+} else {
+  PROMPT_DIR = process.env.HOME + '/.impromptu';
+  main();
+}
