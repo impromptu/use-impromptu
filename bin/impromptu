@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
+if [[ -z "$IMPROMPTU_DIR" || ! -d "$IMPROMPTU_DIR" ]]; then
+  export IMPROMPTU_DIR="$HOME/.impromptu"
+fi
+
 if [[ -z "$IMPROMPTU_BIN" || ! -d "$IMPROMPTU_BIN" ]]; then
-  export IMPROMPTU_BIN="$HOME/.impromptu/node_modules/impromptu/bin"
+  export IMPROMPTU_BIN="$IMPROMPTU_DIR/node_modules/impromptu/bin"
 fi
 
 build_prompt="$IMPROMPTU_BIN/impromptu-prompt"
