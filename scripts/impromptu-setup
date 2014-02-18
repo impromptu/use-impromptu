@@ -95,12 +95,15 @@ function main() {
   if (fs.existsSync(PROMPT_DIR))
     process.exit(0);
 
-  console.log("You don't have a ~/.impromptu directory.");
+  console.log("You don't have an Impromptu directory.");
   userInput.question("Would you like help setting one up? (Y/n) ", handleQuestionResponse);
 }
 
 // Override home directory when using sudo
-if (usingSudo) {
+if (process.env.IMPROMPTU_DIR) {
+  PROMPT_DIR = process.env.IMPROMPTU_DIR;
+  main();
+} else if (usingSudo) {
   exec('eval echo ~${SUDO_USER}', function(err, stdout) {
     PROMPT_DIR = stdout.trim() + '/.impromptu';
     main();
