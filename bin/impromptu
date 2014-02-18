@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
-if [[ -z "$IMPROMPTU_BIN" || ! -d "$IMPROMPTU_BIN" ]]; then
-  export IMPROMPTU_BIN="$HOME/.impromptu/node_modules/impromptu/bin"
+if [[ -z "$IMPROMPTU_DIR" || ! -d "$IMPROMPTU_DIR" ]]; then
+  export IMPROMPTU_DIR="$HOME/.impromptu"
 fi
 
-build_prompt="$IMPROMPTU_BIN/impromptu-prompt"
-if [ -f "$build_prompt" ]; then
-  source $build_prompt
+export IMPROMPTU_BIN="$IMPROMPTU_DIR/node_modules/impromptu/bin"
+
+impromptu="$IMPROMPTU_BIN/impromptu-prompt"
+if [ -f "$impromptu" ]; then
+  source $impromptu
 else
   printf "Unable to find Impromptu.\n$ "
 fi
