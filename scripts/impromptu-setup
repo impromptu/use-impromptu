@@ -84,7 +84,7 @@ function cloneMyImpromptu() {
 function handleQuestionResponse(response) {
   if (/^n/i.test(response)) {
     console.log('Okay, please consult the Impromptu documentation if you need any help getting setup.');
-    console.log('https://github.com/Impromptu/impromptu/tree/master/docs');
+    console.log('https://github.com/Impromptu/impromptu');
     process.exit(0);
   }
 
